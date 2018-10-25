@@ -31,3 +31,9 @@ youtube-dl -o 男双2_三四名决赛_[默认分组024]_第20场_场地4_122_1F_
 youtube-dl -o 混双_决赛_[默认分组023]_第21场_场地2_022_1S_1:2_2_2S_梁嘉文_任屏屏_4:21_2:21_王文乐_冯智昭.mp4 http://pili-media.live.ymq.me/recordings/z1.ymq-live.5b7f9ede20a05d2e78016281/1535193811.m3u8
 ###---Total 8 match Videos ---###
 save result to excutable file : ../temp/2018古劳镇“商会杯”羽毛球邀请赛.sh
+
+
+### todo list ###
+1. input web url instead of save to local html file
+
+
