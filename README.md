@@ -2,9 +2,10 @@
 
 you need to install youtube-dl and some python libs like bs4
 
-utility:
-python3 ymqMp4Dl.py 2018.9.8中科大60周年校庆五羽轮比团体赛.htm;
-sh dl_ymq.sh
+instructions:
+1. download ymq.me url to local file, like http://apply.ymq.me/Index/Index/match_all/id/944.html to 2018.9.8中科大60周年校庆五羽轮比团体赛.htm
+2. python3 ymqMp4Dl.py 2018.9.8中科大60周年校庆五羽轮比团体赛.htm
+3. sh dl_ymq.sh
 
 #usage: python3 ymqMp4Dl.py [-h] [-v] [-o OUTPUT] fileName
 #
