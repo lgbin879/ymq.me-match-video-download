@@ -29,9 +29,10 @@ headers = {
 
 defaultOutputFile = 'dl_ymq.sh'
 
-defaultAlbumUrl = '2018.9.8中科大60周年校庆五羽轮比团体赛.htm'
+defaultAllMatchUrl = 'http://apply.ymq.me/Index/Index/match_all/id/947.html'
 
 postUrl = 'http://user.ymq.me/public/live/getDemandInfo'
+postGroupUrl = 'http://user.ymq.me/public/live/getDemandByGroup'
 
 reUrl = r'http://apply.ymq.me/Index/video/demand/id/\d+/macthid/\d+.html'
 
@@ -52,6 +53,65 @@ payloadJson = {
 
 payloadStr = json.dumps(payloadJson)
 
+matchPostJson={"body":{"raceId":944},"header":{}}
+m3u8Postjson={"body":{"live_type":2,"group":"944"},"header":{"token":"","from":"wx"}}
+
+
+allMatchDataUrl = "http://race.ymq.me/webservice/appWx/mergedMatches.do?t=1490599068108"
+allVideoUrl = "http://user.ymq.me/public/live/getDemandByGroup"
+
+
+def dynamic_download(webUrl, outputFile):
+    f = open(outputFile, 'w+')
+
+    raceIdStr = re.findall('\d+', webUrl)[0]
+    matchPostJson['body']['raceId'] = int(raceIdStr)
+    m3u8Postjson['body']['group'] = raceIdStr
+
+    resMatch = requests.post(allMatchDataUrl, json=matchPostJson, headers=headers)
+    resVideo = requests.post(allVideoUrl, json=m3u8Postjson, headers=headers)
+
+    jsonMatch = json.loads(resMatch.text)
+    jsonVideo = json.loads(resVideo.text)
+
+    if jsonMatch['message'] == '命令成功执行' and jsonVideo['message'] == '成功':
+        videoInfoList = jsonVideo['data']
+
+        i = 0
+        videoMatchIdList = []
+        # put all video match id to a list for judge
+        for i in range(0, len(videoInfoList)):
+            videoMatchIdList.append(videoInfoList[i]['matchId'])
+
+        i = j = k =0
+        for i in range(0, len(jsonMatch['detail']['matches'])):
+            for j in range(0, len(jsonMatch['detail']['matches'][i])):
+                if jsonMatch['detail']['matches'][i][j] == None:
+                    pass
+                else:
+                    if jsonMatch['detail']['matches'][i][j]['courtArrangeId'] in videoMatchIdList:
+                        nameList = []
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['courtArrangeId'])+'_')
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['fullName'])+'_')
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['mateOneVo']['mateWithClub'])+'_')
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['scoreOneCum'])+':')
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['scoreTwoCum'])+'_')
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['mateTwoVo']['mateWithClub'])+'.mp4')
+                        fileName = ''.join(nameList)
+                        fileName = re.sub(r'\s+', '_', fileName.strip())
+
+                        for k in range(0, len(videoInfoList)):
+                            if videoInfoList[k]['matchId'] == jsonMatch['detail']['matches'][i][j]['courtArrangeId']:
+                                print('youtube-dl -o ', fileName, videoInfoList[k]['hlsLive_url'], '\n')
+
+                                print('youtube-dl -o ', fileName, videoInfoList[k]['hlsLive_url'], file=f)
+    
+    f.close()
+    p = subprocess.Popen(["chmod", "+x", outputFile], stdout=subprocess.PIPE)
+    print('save result to excutable file : ' + outputFile)
+
+
+
 def getM3u8(payloadData):
     res = requests.post(postUrl, data=json.dumps(payloadData), headers=headers)
     js = json.loads(res.text)
@@ -63,7 +123,7 @@ def getM3u8(payloadData):
         print(js)
     
 
-def main(webUrl, outputFile):
+def static_download(webUrl, outputFile):
     f = open(outputFile, 'w+')
 
     htmlfile=open(webUrl, 'r')
@@ -110,7 +170,7 @@ def main(webUrl, outputFile):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='download all audioes in ximalay album like :' + defaultAlbumUrl)
+    parser = argparse.ArgumentParser(description='download all audioes in ximalay album like :' + defaultAllMatchUrl)
     parser.add_argument('url', type=str, help="web url need to download")
     parser.add_argument("-o", "--output", help="output file name")
     parser.add_argument("-v", "--verbosity", help="increase output verbosity", action="store_true")
@@ -119,12 +179,6 @@ if __name__ == '__main__':
     webUrl = args.url
     outputFile = args.output
 
-    # input url format checker
-    if os.path.isfile(webUrl):
-        pass
-    else:
-        sys.exit('\n ## Error : unrecognize url, please input correct url format like : ' + defaultAlbumUrl)
-
     if args.output:
         outputFile = args.output
     else:
@@ -132,4 +186,11 @@ if __name__ == '__main__':
 
     print('## Info : save result to : ',outputFile)
 
-    main(webUrl, outputFile)
+    # input url format checker
+    if os.path.isfile(webUrl):
+        static_download(webUrl, outputFile)
+    elif re.match(r'http[s]?://apply.ymq.me/Index/Index/match_all/id/\d+.html', webUrl):
+        dynamic_download(webUrl, outputFile)
+    else:
+        sys.exit('\n ## Error : unrecognize url, please input correct url format like : ' + defaultAllMatchUrl)
+

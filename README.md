@@ -3,8 +3,8 @@
 you need to install youtube-dl and some python libs like bs4
 
 instructions:
-1. download ymq.me url to local file, like http://apply.ymq.me/Index/Index/match_all/id/944.html to 2018.9.8中科大60周年校庆五羽轮比团体赛.htm
-2. python3 ymqMp4Dl.py 2018.9.8中科大60周年校庆五羽轮比团体赛.htm
+1. get the all match url
+2. python3 ymqMp4Dl.py http://apply.ymq.me/Index/Index/match_all/id/944.html
 3. sh dl_ymq.sh
 
 #usage: python3 ymqMp4Dl.py [-h] [-v] [-o OUTPUT] fileName
@@ -18,7 +18,8 @@ instructions:
 #                        output file name
 
 ### operation logs for instance ###
-lguibin@ubuntu:~/Python/ymq.me-match-video-download$ py ymqMp4Dl.py ../temp/2018古劳镇“商会杯”羽毛球邀请赛.html -o ../temp/2018古劳镇“商会杯”羽毛球邀请赛.sh
+lguibin@ubuntu:~/Python/ymq.me-match-video-download$ py ymqMp4Dl.py http://apply.ymq.me/Index/Index/match_all/id/944.html
+temp/2018古劳镇“商会杯”羽毛球邀请赛.html -o ../temp/2018古劳镇“商会杯”羽毛球邀请赛.sh
 ## Info : save result to :  ../temp/2018古劳镇“商会杯”羽毛球邀请赛.sh
 ###--- 2018古劳镇“商会杯”羽毛球邀请赛 72 matches ---###
 youtube-dl -o 男双1_半决赛_[默认分组021]_2018-08-25_16:30_场地2_20A1_2:0_B2_谭新_邹敏明_21:17_21:12_马双云_黄冠杰.mp4 http://pili-media.live.ymq.me/recordings/z1.ymq-live.5b7f9ede20a05d2e78016281/1535186973.m3u8
@@ -32,8 +33,5 @@ youtube-dl -o 混双_决赛_[默认分组023]_第21场_场地2_022_1S_1:2_2_2S_�
 ###---Total 8 match Videos ---###
 save result to excutable file : ../temp/2018古劳镇“商会杯”羽毛球邀请赛.sh
 
-
-### todo list ###
-1. input web url instead of save to local html file
 
 
