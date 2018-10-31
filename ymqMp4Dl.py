@@ -105,7 +105,9 @@ def dynamic_download(webUrl, outputFile):
                                 print('youtube-dl -o ', fileName, videoInfoList[k]['hlsLive_url'], '\n')
 
                                 print('youtube-dl -o ', fileName, videoInfoList[k]['hlsLive_url'], file=f)
-    
+    else:
+        print('fail to get url %s Match=%s, Video=%s'%(webUrl, jsonMatch['message'], jsonVideo['message']))
+
     f.close()
     p = subprocess.Popen(["chmod", "+x", outputFile], stdout=subprocess.PIPE)
     print('save result to excutable file : ' + outputFile)
