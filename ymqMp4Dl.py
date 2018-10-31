@@ -91,12 +91,24 @@ def dynamic_download(webUrl, outputFile):
                 else:
                     if jsonMatch['detail']['matches'][i][j]['courtArrangeId'] in videoMatchIdList:
                         nameList = []
+
                         nameList.append(str(jsonMatch['detail']['matches'][i][j]['courtArrangeId'])+'_')
                         nameList.append(str(jsonMatch['detail']['matches'][i][j]['fullName'])+'_')
-                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['mateOneVo']['mateWithClub'])+'_')
+
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['teamOneName'])+'_')
+
+                        p = 0
+                        for p in range(0, len(jsonMatch['detail']['matches'][i][j]['playerOnes'])):
+                            nameList.append(str(jsonMatch['detail']['matches'][i][j]['playerOnes'][p]['name'])+'_')
+
                         nameList.append(str(jsonMatch['detail']['matches'][i][j]['scoreOneCum'])+':')
                         nameList.append(str(jsonMatch['detail']['matches'][i][j]['scoreTwoCum'])+'_')
-                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['mateTwoVo']['mateWithClub'])+'.mp4')
+
+                        p = 0
+                        for p in range(0, len(jsonMatch['detail']['matches'][i][j]['playerTwos'])):
+                            nameList.append(str(jsonMatch['detail']['matches'][i][j]['playerTwos'][p]['name'])+'_')
+                        
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['teamTwoName'])+'.mp4')
                         fileName = ''.join(nameList)
                         fileName = re.sub(r'\s+', '_', fileName.strip())
 
