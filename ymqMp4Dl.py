@@ -86,7 +86,7 @@ def dynamic_download(webUrl, outputFile):
         # put all video match id to a list for judge
         for i in range(0, len(videoInfoList)):
             print(videoInfoList[i])
-            if 'matchid' in videoInfoList[i]:
+            if 'matchId' in videoInfoList[i]:
                 videoMatchIdList.append(videoInfoList[i]['matchId'])
 
         i = j = k =0
@@ -107,7 +107,7 @@ def dynamic_download(webUrl, outputFile):
                         for p in range(0, len(jsonMatch['detail']['matches'][i][j]['playerOnes'])):
                             nameList.append(str(jsonMatch['detail']['matches'][i][j]['playerOnes'][p]['name'])+'_')
 
-                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['scoreOneCum'])+':')
+                        nameList.append(str(jsonMatch['detail']['matches'][i][j]['scoreOneCum'])+'vs')
                         nameList.append(str(jsonMatch['detail']['matches'][i][j]['scoreTwoCum'])+'_')
 
                         p = 0
@@ -209,8 +209,6 @@ if __name__ == '__main__':
     # input url format checker
     if os.path.isfile(webUrl):
         static_download(webUrl, outputFile)
-    elif re.match(r'http[s]?://apply.ymq.me/Index/Index/match_all/id/\d+.html', webUrl):
-        dynamic_download(webUrl, outputFile)
     else:
-        sys.exit('\n ## Error : unrecognize url, please input correct url format like : ' + defaultAllMatchUrl)
+        dynamic_download(webUrl, outputFile)
 
