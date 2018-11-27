@@ -86,8 +86,13 @@ def dynamic_download(webUrl, outputFile):
         # put all video match id to a list for judge
         for i in range(0, len(videoInfoList)):
             print(videoInfoList[i])
+
             if 'matchId' in videoInfoList[i]:
                 videoMatchIdList.append(videoInfoList[i]['matchId'])
+            elif: 'matchid' in videoInfoList[i]:
+                videoMatchIdList.append(videoInfoList[i]['matchid'])
+            else:
+                pass
 
         i = j = k =0
         for i in range(0, len(jsonMatch['detail']['matches'])):
