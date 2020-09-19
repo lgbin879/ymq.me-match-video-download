@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>首页 - 2018中科大嘉年华参赛信息查询</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+<div class="navbar navbar-inverse navbar-static-top ">
+    <div class="container">
+    <div class="navbar-header">
+        <button class="navbar-toggle" data-toggle="collapse" data-target="#mymenu">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <a href="#" class="navbar-brand">参赛信息查询</a>
+    </div>
+    <div class="collapse navbar-collapse" id="mymenu">
+        <ul class="nav navbar-nav">
+            <li ><a href="/center.html">参赛队伍</a></li>
+            <li class="active"><a href="/index.html">参赛队员</a></li>
+        </ul>
+    </div>
+    </div>
+</div>
+  <div class="container">
+
+    <div class="container-fluid">
+
+      <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>出生日期</th>
+            <th>手机号</th>
+            <th>俱乐部ID</th>
+            <th>身份证号</th>
+            <th>籍贯</th>
+        </tr>
+        {%content%}       
+      </table>
+    </div>
+  </div>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>            
