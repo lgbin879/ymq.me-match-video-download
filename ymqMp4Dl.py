@@ -89,7 +89,7 @@ def dynamic_download(webUrl, outputFile):
 
             if 'matchId' in videoInfoList[i]:
                 videoMatchIdList.append(videoInfoList[i]['matchId'])
-            elif: 'matchid' in videoInfoList[i]:
+            elif 'matchid' in videoInfoList[i]:
                 videoMatchIdList.append(videoInfoList[i]['matchid'])
             else:
                 pass
